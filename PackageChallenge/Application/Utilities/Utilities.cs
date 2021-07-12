@@ -32,8 +32,8 @@ namespace Application.Utilities
                         string[] subsItem = subs[j].Split(',');
                         Item newItem = new Item() {
                             Index = Convert.ToInt32(subsItem[0].Remove(0,1)),
-                            Weight = Convert.ToDecimal(subsItem[1], new CultureInfo("en-US")),
-                            Cost = Convert.ToDecimal(subsItem[2].Substring(1, subsItem[2].Length-2))
+                            Weight = float.Parse(subsItem[1], new CultureInfo("en-US")),
+                            Cost = float.Parse(subsItem[2].Substring(1, subsItem[2].Length-2), new CultureInfo("en-US"))
                         };
 
                         inputOfEachLine.Add(newItem);

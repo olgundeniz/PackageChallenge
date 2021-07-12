@@ -5,8 +5,8 @@ namespace Domain
     public class Item
     {
         public int Index { get; set; }
-        public decimal Weight { get; set; }
-        public decimal Cost { get; set; }
+        public float Weight { get; set; }
+        public float Cost { get; set; }
         public override bool Equals(Object obj)
         {
             //Check for null and compare run-time types.

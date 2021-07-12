@@ -21,14 +21,14 @@ namespace Tests
             var expectedListByLine = new List<Item>();
 
             //arrange
-            var newItem1 = new Item() { Index=1, Weight= 53.38m , Cost=45 };
-            var newItem2 = new Item() { Index = 2, Weight = 88.62m, Cost = 98 };
-            var newItem3 = new Item() { Index = 3, Weight = 78.48m, Cost = 3 };
-            var newItem4 = new Item() { Index = 4, Weight = 72.30m, Cost = 76 };
-            var newItem5 = new Item() { Index = 5, Weight =30.18m, Cost = 9 };
-            var newItem6 = new Item() { Index = 6, Weight = 46.34m, Cost = 48 };
+            var newItem1 = new Item() { Index=1, Weight= 53.38f , Cost=45 };
+            var newItem2 = new Item() { Index = 2, Weight = 88.62f, Cost = 98 };
+            var newItem3 = new Item() { Index = 3, Weight = 78.48f, Cost = 3 };
+            var newItem4 = new Item() { Index = 4, Weight = 72.30f, Cost = 76 };
+            var newItem5 = new Item() { Index = 5, Weight =30.18f, Cost = 9 };
+            var newItem6 = new Item() { Index = 6, Weight = 46.34f, Cost = 48 };
 
-            var newItem7 = new Item() { Index = 1, Weight = 15.3m, Cost = 34 };
+            var newItem7 = new Item() { Index = 1, Weight = 15.3f, Cost = 34 };
 
             expectedItemLists.Add(new List<Item>() { newItem1, newItem2, newItem3, newItem4, newItem5, newItem6 });
             expectedItemLists.Add(new List<Item>() { newItem7 });
