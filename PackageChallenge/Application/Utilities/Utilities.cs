@@ -26,12 +26,13 @@ namespace Application.Utilities
 
                     var inputOfEachLine = new List<Item>();
 
-                    for (int j = 2; j < subs.Length; i++)
+                    for (int j = 2; j < subs.Length; j++)
                     {
+                        string[] subsItem = subs[j].Split(',');
                         Item newItem = new Item() {
-                            Index = Convert.ToInt32(subs[0]),
-                            Weight = Convert.ToDecimal(subs[2]),
-                            Cost = Convert.ToDecimal(subs[3])
+                            Index = Convert.ToInt32(subsItem[0].Remove(0,1)),
+                            Weight = Convert.ToDecimal(subsItem[1]),
+                            Cost = Convert.ToDecimal(subsItem[2].Substring(1, subsItem[2].Length-2))
                         };
 
                         inputOfEachLine.Add(newItem);
