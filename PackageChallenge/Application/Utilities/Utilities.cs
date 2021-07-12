@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Application.Utilities
                         string[] subsItem = subs[j].Split(',');
                         Item newItem = new Item() {
                             Index = Convert.ToInt32(subsItem[0].Remove(0,1)),
-                            Weight = Convert.ToDecimal(subsItem[1]),
+                            Weight = Convert.ToDecimal(subsItem[1], new CultureInfo("en-US")),
                             Cost = Convert.ToDecimal(subsItem[2].Substring(1, subsItem[2].Length-2))
                         };
 
