@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "pmq5w8UYvox0+QHdZ63qyBfHSUq+i3hf9331C0ec6WqF75n73d1ueqQBiNl0lSaGF3QvfriA0tseL82yNy05vA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\z003zu0r\\source\\repos\\PackageChallenge\\Tests\\Tests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\z003zu0r\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\z003zu0r\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\z003zu0r\\.nuget\\packages\\nunit\\3.13.2\\nunit.3.13.2.nupkg.sha512",
+    "C:\\Users\\z003zu0r\\.nuget\\packages\\nunit3testadapter\\4.0.0\\nunit3testadapter.4.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
