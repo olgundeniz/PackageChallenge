@@ -12,6 +12,10 @@ All credit goes to the original developer.
 
 --
 
+I used Domain Driven Design approach for the project. Initially I added logging mechanism with Serilog, but then I decided that it is best to leave it to the consumer to decide on any ILogger extensions if they choose to do so. 
+
+--
+
 
 # PackageChallenge
 
