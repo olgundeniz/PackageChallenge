@@ -2,6 +2,17 @@ Created with .NET 5
 
 NUnit 3, NUnit3TestAdapter and Microsoft.NET.Test.Sdk are used for testing.
 
+As a priority queue implementation, I used OrderedBag of PowerCollections: https://archive.codeplex.com/?p=PowerCollections
+
+--
+
+This is an implementation of a well known "Knapsack Problem" which is taken from https://www.geeksforgeeks.org/0-1-knapsack-using-least-count-branch-and-bound/
+
+All credit goes to the original developer.
+
+--
+
+
 # PackageChallenge
 
 Introduction	
