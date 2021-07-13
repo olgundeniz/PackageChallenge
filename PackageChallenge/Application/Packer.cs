@@ -1,6 +1,7 @@
 ﻿using Application.Utilities;
 using Domain;
 using Domain.Entities;
+using Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +11,13 @@ namespace com.mobiquity.packer
 {
     public class Packer
     {
+        private static IApiLogger _apiLogger;
         private static int size;
         private static float capacity;
         public static string Pack(string filePath)
         {
+            _apiLogger = ApiLoggerFactory.CreateLogger();
+            _apiLogger.Error(new APIException("test"), "test");
             List<List<Item>> inputList = new List<List<Item>>();
             List<int> maxWeights = new List<int>();
 
