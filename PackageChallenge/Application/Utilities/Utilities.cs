@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,8 +11,10 @@ namespace Application.Utilities
 {
     public static class Utilities
     {
-        public static List<List<Item>> ReadInput(string filePath, out List<int> maxWeights)
+        private static ILogger Log;
+        public static List<List<Item>> ReadInput(string filePath, out List<int> maxWeights, ILogger logger = null)
         {
+            Log = logger;
             var input = new List<List<Item>>();
             maxWeights = new List<int>();
 
@@ -44,8 +47,9 @@ namespace Application.Utilities
             }
             catch (Exception ex)
             {
-                //TODO: log the stack trace
-                throw new APIException("Exception occured while reading from input file. Details:" + " " + ex.Message);
+                Log?.LogError($"Exception occured while reading from input file at {filePath}");
+                Log?.LogError($"Exception message: {ex.Message}");
+                throw new APIException($"Exception occured while reading from input file at {filePath}");
             }
 
             return input;

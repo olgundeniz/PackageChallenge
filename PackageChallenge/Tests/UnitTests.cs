@@ -4,6 +4,7 @@ using System.IO;
 using Application.Utilities;
 using com.mobiquity.packer;
 using Domain;
+using Domain.Entities.Exceptions;
 using NUnit.Framework;
 
 namespace Tests
@@ -11,6 +12,47 @@ namespace Tests
     [TestFixture]
     public class UnitTests
     {
+        [Test]
+        public void CheckMaxWeightOfPackage_ThrowsException()
+        {
+            List<int> maxWeights = new List<int> {1,2,3,4,101 };
+
+            APIException ex = Assert.Throws<APIException>(() => Packer.CheckMaxWeightOfPackage(maxWeights));
+
+            Assert.AreEqual($"Exception occured: {ExceptionMessage.MaxWeightOfPackage}", ex.Message);
+        }
+        [Test]
+        public void CheckMaxItemCount_ThrowsException()
+        {
+            var itemLists = new List<List<Item>>();
+            var newItem1 = new Item() { Index = 1, Weight = 53.38f, Cost = 45 };
+            var newItem2 = new Item() { Index = 2, Weight = 88.62f, Cost = 98 };
+            var newItem3 = new Item() { Index = 3, Weight = 78.48f, Cost = 3 };
+
+            itemLists.Add(new List<Item>() { newItem1, newItem2 });
+            itemLists.Add(new List<Item>() { newItem1, newItem2, newItem3, newItem1, newItem2, newItem3, newItem1, newItem2, newItem3 ,
+                newItem1, newItem2, newItem3, newItem1, newItem2, newItem3, newItem1
+            });
+
+            APIException ex = Assert.Throws<APIException>(() => Packer.CheckMaxItemCount(itemLists));
+
+            Assert.AreEqual($"Exception occured: {ExceptionMessage.MaxItemCount}", ex.Message);
+        }
+        [Test]
+        public void CheckMaxWeightAndCostOfItem_ThrowsException()
+        {
+            var itemLists = new List<List<Item>>();
+            var newItem1 = new Item() { Index = 1, Weight = 53.38f, Cost = 45 };
+            var newItem2 = new Item() { Index = 2, Weight = 88.62f, Cost = 98 };
+            var newItem3 = new Item() { Index = 3, Weight = 78.48f, Cost = 101 };
+
+            itemLists.Add(new List<Item>() { newItem1, newItem2 });
+            itemLists.Add(new List<Item>() { newItem1, newItem2, newItem3, newItem1, newItem2});
+
+            APIException ex = Assert.Throws<APIException>(() => Packer.CheckMaxWeightAndCostOfItem(itemLists));
+
+            Assert.AreEqual($"Exception occured: {ExceptionMessage.MaxWeightAndCostOfItem}", ex.Message);
+        }
         [Test]
         public void Utilities_ReadInput_InitializesCorrectInput()
         {

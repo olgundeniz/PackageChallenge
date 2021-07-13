@@ -1,45 +1,93 @@
 ﻿using Application.Utilities;
 using Domain;
 using Domain.Entities;
-using Infrastructure.Logger;
+using Domain.Entities.Exceptions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Wintellect.PowerCollections;
 
+[assembly: InternalsVisibleTo("Tests")]
 namespace com.mobiquity.packer
 {
     public class Packer
     {
-        private static IApiLogger _apiLogger;
+        private static ILogger Log;
         private static int size;
         private static float capacity;
-        public static string Pack(string filePath)
+        public static string Pack(string filePath, ILogger logger = null)
         {
-            _apiLogger = ApiLoggerFactory.CreateLogger();
-            _apiLogger.Error(new APIException("test"), "test");
+            Log = logger;
             List<List<Item>> inputList = new List<List<Item>>();
             List<int> maxWeights = new List<int>();
 
-            inputList = Utilities.ReadInput(filePath, out maxWeights);
+            inputList = Utilities.ReadInput(filePath, out maxWeights, Log);
+
+            CheckMaxWeightOfPackage(maxWeights);
+
+            CheckMaxItemCount(inputList);
+
+            CheckMaxWeightAndCostOfItem(inputList);
 
             StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < inputList.Count; i++)
+            try
             {
-                List<Item> subList = inputList[i];
-                size = subList.Count;
-                capacity = maxWeights[i];
+                for (int i = 0; i < inputList.Count; i++)
+                {
+                    List<Item> subList = inputList[i];
+                    size = subList.Count;
+                    capacity = maxWeights[i];
 
-                sb.AppendLine(solve(subList));
+                    sb.AppendLine(solve(subList));
+                }
             }
-
-
+            catch (Exception ex)
+            {
+                Log?.LogError($"Exception occured");
+                Log?.LogError($"Exception message: {ex.Message}");
+                throw new APIException($"Exception occured: {ex.Message}");
+            }
+            
             return sb.ToString();
         }
 
+        internal static void CheckMaxWeightAndCostOfItem(List<List<Item>> inputList)
+        {
+            foreach (var subList in inputList)
+            {
+                if (subList.Exists(x=>x.Weight > 100 || x.Cost > 100))
+                {
+                    Log?.LogError($"Exception occured");
+                    Log?.LogError($"Exception message: {ExceptionMessage.MaxWeightAndCostOfItem}");
+                    throw new APIException($"Exception occured: {ExceptionMessage.MaxWeightAndCostOfItem}");
+                }
+            }
+        }
 
+        internal static void CheckMaxItemCount(List<List<Item>> inputList)
+        {
+            foreach (var subList in inputList)
+            {
+                if (subList.Count > 15)
+                {
+                    Log?.LogError($"Exception occured");
+                    Log?.LogError($"Exception message: {ExceptionMessage.MaxItemCount}");
+                    throw new APIException($"Exception occured: {ExceptionMessage.MaxItemCount}");
+                }
+            }            
+        }
 
+        internal static void CheckMaxWeightOfPackage(List<int> maxWeights)
+        {
+            if(maxWeights.Exists(x => x > 100))
+            {
+                Log?.LogError($"Exception occured");
+                Log?.LogError($"Exception message: {ExceptionMessage.MaxWeightOfPackage}");
+                throw new APIException($"Exception occured: {ExceptionMessage.MaxWeightOfPackage}");
+            }
+        }
 
         // Function to calculate upper bound
         // (includes fractional part of the items)
@@ -241,18 +289,6 @@ namespace com.mobiquity.packer
                 if (minLB >= right.ub)
                     pq.Add(new Node(right));
             }
-
-            //Console.WriteLine("Items taken"
-            //                   + "into the knapsack are");
-            //for (int i = 0; i < size; i++)
-            //{
-            //    if (finalPath[i])
-            //        Console.Write("1 ");
-            //else
-            //        Console.Write("0 ");
-            //}
-            //Console.WriteLine("\nMaximum profit"
-            //                   + " is " + (-finalLB));
 
             StringBuilder sb = new StringBuilder();
 
