@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Utilities;
+using Domain;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,32 @@ namespace com.mobiquity.packer
 {
     public class Packer
     {
+        private static int size;
+        private static float capacity;
         public static string Pack(string filePath)
         {
-            return filePath;
+            List<List<Item>> inputList = new List<List<Item>>();
+            List<int> maxWeights = new List<int>();
+
+            inputList = Utilities.ReadInput(filePath, out maxWeights);
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                List<Item> subList = inputList[i];
+                size = subList.Count;
+                capacity = maxWeights[i];
+
+                sb.AppendLine(solve(subList));
+            }
+
+
+            return sb.ToString();
         }
 
 
 
-        private static int size;
-        private static float capacity;
 
         // Function to calculate upper bound
         // (includes fractional part of the items)
@@ -152,7 +170,7 @@ namespace com.mobiquity.packer
                     {
                         // Reached last level
                         for (int i = 0; i < size; i++)
-                            finalPath[arr[i].Index]
+                            finalPath[arr[i].Index-1]
                                 = currPath[i];
                         finalLB = current.lb;
                     }
@@ -220,20 +238,32 @@ namespace com.mobiquity.packer
                     pq.Add(new Node(right));
             }
 
-            Console.WriteLine("Items taken"
-                               + "into the knapsack are");
-            for (int i = 0; i < size; i++)
-            {
-                if (finalPath[i])
-                    Console.Write("1 ");
-            else
-                    Console.Write("0 ");
-            }
-            Console.WriteLine("\nMaximum profit"
-                               + " is " + (-finalLB));
+            //Console.WriteLine("Items taken"
+            //                   + "into the knapsack are");
+            //for (int i = 0; i < size; i++)
+            //{
+            //    if (finalPath[i])
+            //        Console.Write("1 ");
+            //else
+            //        Console.Write("0 ");
+            //}
+            //Console.WriteLine("\nMaximum profit"
+            //                   + " is " + (-finalLB));
 
             StringBuilder sb = new StringBuilder();
 
+            for (int i = 0; i < size; i++)
+            {
+                if (finalPath[i])
+                {
+                    sb.Append(i+1 + ",");
+                }
+            }
+
+            if (string.IsNullOrEmpty(sb.ToString()))
+                return "-";
+            else
+                sb.Remove(sb.Length-1, 1);
 
             return sb.ToString();
         }

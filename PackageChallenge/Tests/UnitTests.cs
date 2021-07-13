@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Application.Utilities;
+using com.mobiquity.packer;
 using Domain;
 using NUnit.Framework;
 
@@ -52,6 +53,13 @@ namespace Tests
                     Assert.AreEqual(expectedItemLists[i][j], itemLists[i][j]);
                 }
             }
+        }
+        [Test]
+        public void Pack_CorrectResult()
+        {
+            string inputFilePath = @".\example_input";
+
+            string result = Packer.Pack(inputFilePath);
         }
     }
 }
