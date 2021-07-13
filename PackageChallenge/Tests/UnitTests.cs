@@ -97,11 +97,14 @@ namespace Tests
             }
         }
         [Test]
-        public void Pack_CorrectResult()
+        public void Pack_Returns_CorrectResult()
         {
+            string expectedResult = $"4{Environment.NewLine}-{Environment.NewLine}2,7{Environment.NewLine}6,9{Environment.NewLine}";
             string inputFilePath = @".\example_input";
 
             string result = Packer.Pack(inputFilePath);
+
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }
